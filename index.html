@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Focus Pulse</title>
+<meta name="description" content="A private dashboard for logging focus sessions and mood, with daily stats and a weekly mood trend chart." />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Focus&nbsp;Pulse</h1>
+  <p class="tagline">Log a focus session, track your mood, see the trend.</p>
+</header>
+
+<main>
+
+  <section class="card" aria-labelledby="log-heading">
+    <h2 id="log-heading">Log a session</h2>
+    <form id="session-form">
+
+      <div class="field">
+        <label for="minutes">Minutes spent on task</label>
+        <input
+          type="number"
+          id="minutes"
+          name="minutes"
+          min="1"
+          max="600"
+          step="1"
+          placeholder="e.g. 25"
+          required
+          inputmode="numeric"
+        />
+      </div>
+
+      <div class="field">
+        <label for="mood">
+          Mood
+          <span id="mood-value" class="mood-value" aria-hidden="true">0</span>
+        </label>
+        <input
+          type="range"
+          id="mood"
+          name="mood"
+          min="-3"
+          max="3"
+          step="1"
+          value="0"
+          aria-describedby="mood-scale"
+        />
+        <div id="mood-scale" class="mood-scale">
+          <span>😣 −3</span>
+          <span>−2</span>
+          <span>−1</span>
+          <span>😐 0</span>
+          <span>+1</span>
+          <span>+2</span>
+          <span>+3 😄</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="notes">Notes <span class="optional">(optional, 200 characters max)</span></label>
+        <textarea
+          id="notes"
+          name="notes"
+          maxlength="200"
+          rows="2"
+          placeholder="Anything worth remembering about this session..."
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary">Log session</button>
+    </form>
+  </section>
+
+  <section class="card" aria-labelledby="stats-heading">
+    <h2 id="stats-heading">Today</h2>
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat">
+        <span class="stat-value" id="stat-sessions">0</span>
+        <span class="stat-label">sessions</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="stat-minutes">0</span>
+        <span class="stat-label">total minutes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="stat-avg-minutes">0</span>
+        <span class="stat-label">avg min / session</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="stat-avg-mood">0</span>
+        <span class="stat-label">avg mood</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="chart-heading">
+    <h2 id="chart-heading">Weekly mood trend</h2>
+    <p class="chart-sub">Average mood per day, last 7 days.</p>
+    <canvas id="mood-chart" width="600" height="220" role="img" aria-label="Line chart of average mood per day over the last 7 days"></canvas>
+    <p id="chart-empty" class="empty-note" hidden>No sessions logged yet this week — your trend line will appear here once you log a few.</p>
+  </section>
+
+  <section class="card" aria-labelledby="log-list-heading">
+    <div class="log-list-header">
+      <h2 id="log-list-heading">Recent sessions</h2>
+      <div class="log-actions">
+        <button type="button" id="export-btn" class="btn-secondary">Export data</button>
+        <button type="button" id="reset-btn" class="btn-danger">Reset all data</button>
+      </div>
+    </div>
+    <ul id="session-list" class="session-list"></ul>
+    <p id="session-empty" class="empty-note">No sessions logged yet. Log your first one above.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>All data stays in your browser's local storage on this device. Nothing is sent anywhere unless you export it.</p>
+  <p>Made by Eli</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
